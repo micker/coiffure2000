@@ -5,65 +5,58 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Coiffure délirante</title>
 <style>
-:root{--bg:#fff6fb;--fg:#2a1633;--card:#fff;--ac:#ff2d95;--ac2:#7b3cff;--bd:#f0d3e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17101c;--fg:#f7e9ff;--card:#241a2c;--bd:#46335a;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#17101c;--fg:#f7e9ff;--card:#241a2c;--bd:#46335a;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4}
-main{max-width:520px;margin:0 auto;padding:16px}
-h1{font-size:1.6rem;margin:4px 0 2px;background:linear-gradient(90deg,#ff2d95,#ff9a00,#2ecc71,#2d8cff,#7b3cff);-webkit-background-clip:text;background-clip:text;color:transparent}
-p.sub{margin:0 0 14px;opacity:.75}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-button,select,input[type=email]{font:inherit;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--fg);padding:11px 14px}
-button{cursor:pointer;font-weight:600;flex:1}
-button.p{background:linear-gradient(135deg,var(--ac),var(--ac2));border:0;color:#fff}
-button:active{transform:scale(.97)}
-select,input[type=email]{flex:1;min-width:0}
-.stage{background:var(--card);border:2px dashed var(--bd);border-radius:18px;padding:8px;text-align:center}
-#hint{padding:42px 12px;opacity:.7}
-canvas{display:none;width:100%;height:auto;border-radius:12px;touch-action:none;cursor:grab}
-label.s{display:flex;align-items:center;gap:10px;font-size:.9rem}
-label.s input{flex:1}
-#msg{min-height:1.4em;font-size:.9rem;opacity:.85}
-#out{display:none;width:100%;border-radius:12px;margin-top:8px}
+:root{--b1:#ff1493;--b2:#7b2cff;--b3:#00c8ff;--panel:#fff3a8;--ink:#1d0033;--hl:#ffe600;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--b1:#b0006a;--b2:#3d1a8c;--b3:#006a8c;--panel:#3a2a5c;--ink:#fff3a8;color-scheme:dark}}
+:root[data-theme="dark"]{--b1:#b0006a;--b2:#3d1a8c;--b3:#006a8c;--panel:#3a2a5c;--ink:#fff3a8;color-scheme:dark}
+html,body{height:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;overflow:hidden;color:var(--ink);font-family:"Comic Sans MS","Comic Neue","Chalkboard SE","Marker Felt",cursive,sans-serif;background:linear-gradient(135deg,var(--b1),var(--b2),var(--b3),var(--b1));background-size:400% 400%;animation:bg 10s ease-in-out infinite alternate}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(rgba(255,255,255,.4) 2px,transparent 3px) 0 0/26px 26px}
+.app{position:relative;height:100%;max-width:560px;margin:0 auto;display:flex;flex-direction:column}
+.top{text-align:center;padding:8px 8px 0}
+h1{margin:0;font-size:2rem;line-height:1.05;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(90deg,red,orange,yellow,lime,cyan,violet,red) 0 0/300px 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1.5px #000;filter:drop-shadow(3px 3px 0 #000);animation:h 2.5s linear infinite}
+.mq{overflow:hidden;white-space:nowrap;background:#000;color:var(--hl);font-weight:700;font-size:.8rem;padding:3px 0;margin-top:6px;border-block:2px solid var(--hl)}
+.mq span{display:inline-block;padding-left:100%;animation:mq 18s linear infinite}
+.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:12px 10px}
+.frame{position:relative;max-width:100%;display:flex;align-items:center;justify-content:center;border:7px ridge #ffd700;border-radius:6px;background:var(--panel);padding:6px;box-shadow:0 0 0 3px #000,6px 6px 0 3px #000}
+.wow{position:absolute;right:-12px;top:-18px;z-index:2;width:62px;height:62px;display:grid;place-items:center;border:3px solid #000;border-radius:50%;background:var(--hl);color:#e00;font-weight:900;transform:rotate(14deg);box-shadow:3px 3px 0 #000;animation:pulse .8s ease-in-out infinite alternate}
+#hint{text-align:center;font-size:1.5rem;font-weight:900;padding:34px 18px;color:var(--ink);animation:pulse 1s ease-in-out infinite alternate}
+canvas{display:none;width:auto;height:auto;max-width:100%;max-height:max(160px,calc(100dvh - 370px));touch-action:none}
+.dock{padding:8px 10px 10px;background:rgba(0,0,0,.4);border-top:3px solid var(--hl)}
+.r{display:flex;gap:8px;margin-top:8px}
+.r:first-child{margin-top:0}
+.k{flex:1;min-width:0;min-height:54px;padding:6px 4px;border:3px solid #000;border-radius:14px;font:inherit;font-weight:900;font-size:.95rem;line-height:1.05;text-transform:uppercase;color:#000;cursor:pointer;box-shadow:0 5px 0 #000}
+.k:active{transform:translateY(4px);box-shadow:0 1px 0 #000}
+#bSelfie{background:#ffe600}#bGal{background:#00e5ff}#bRnd{background:#7cff3a}#bMail{background:#ff5fd2}#bSave{background:#ff9a1a}
+select,input[type=email]{flex:1;min-width:0;min-height:48px;padding:0 10px;border:3px solid #000;border-radius:12px;background:#fff;color:#000;font:inherit;font-weight:700}
 input[type=file]{display:none}
+#msg{min-height:1.2em;margin-top:6px;text-align:center;font-size:.8rem;font-weight:700;color:var(--hl);text-shadow:1px 1px 0 #000}
+#out{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;max-width:90vw;max-height:72vh;border:6px ridge #ffd700;box-shadow:0 0 0 3px #000,0 0 0 100vmax rgba(0,0,0,.65)}
+@keyframes bg{to{background-position:100% 50%}}
+@keyframes h{to{background-position:-300px 0}}
+@keyframes mq{to{transform:translateX(-100%)}}
+@keyframes pulse{to{transform:scale(1.1) rotate(8deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
-<main>
-<h1>Coiffure délirante 🌈</h1>
-<p class="sub">Prends un selfie, laisse la magie opérer, puis partage !</p>
-
-<div class="row">
-  <button class="p" id="bSelfie">📷 Selfie</button>
-  <button id="bGal">🖼️ Galerie</button>
-</div>
+<main class="app">
+<header class="top"><h1>Coiffure délirante 🌈</h1>
+<div class="mq"><span>★ LA COUPE QUI TUE ★ 100 % GRATUIT ★ SANS CISEAUX ★ 1 DOIGT = BOUGER ★ 2 DOIGTS = TAILLE + ROTATION ★ PARTAGE-LA À TOUTE LA FAMILLE ★</span></div></header>
+<section class="stage"><div class="frame"><div class="wow">WOW!</div><div id="hint">📸 Montre ta tête ! 🤪</div><canvas id="c"></canvas></div></section>
+<footer class="dock">
+<div class="r"><button class="k" id="bSelfie">📷 Selfie</button><button class="k" id="bGal">🖼️ Galerie</button><button class="k" id="bRnd">🎲 Hasard</button></div>
 <input type="file" id="fSelfie" accept="image/*" capture="user">
 <input type="file" id="fGal" accept="image/*">
-
-<div class="stage">
-  <div id="hint">Ajoute une photo de visage pour commencer 🙂</div>
-  <canvas id="c"></canvas>
-</div>
-
 <div id="tools" style="display:none">
-  <div class="row">
-    <button class="p" id="bRnd">🎲 Nouvelle coupe</button>
-    <select id="sty" aria-label="Style"></select>
-  </div>
-  <p class="sub" style="margin:6px 0 0">1 doigt : déplacer · 2 doigts : agrandir et tourner la perruque.</p>
-  <div class="row">
-    <input type="email" id="to" placeholder="Email du destinataire (optionnel)" autocomplete="email">
-  </div>
-  <div class="row">
-    <button class="p" id="bMail">✉️ Envoyer</button>
-    <button id="bSave">💾 Sauver</button>
-  </div>
-  <div id="msg"></div>
-  <img id="out" alt="Résultat à enregistrer">
+<div class="r"><select id="sty" aria-label="Style"></select><input type="email" id="to" placeholder="email@exemple.fr" autocomplete="email"></div>
+<div class="r"><button class="k" id="bMail">✉️ Envoyer</button><button class="k" id="bSave">💾 Sauver</button></div>
 </div>
+<div id="msg"></div>
+</footer>
 </main>
+<img id="out" alt="Résultat à enregistrer">
+<script>document.getElementById("out").addEventListener("click",function(){this.style.display="none"})</script>
 
 <script>
 (function(){
